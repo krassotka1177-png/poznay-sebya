@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 3. Марс — Познай себя</title>
+<style>
+:root {
+  --bg-deep: #0b0716;
+  --bg-card: rgba(32, 20, 58, 0.55);
+  --accent-gold: #e0b64a;
+  --accent-violet: #9d6bff;
+  --accent-pink: #f472b6;
+  --accent-cyan: #38e0d0;
+  --accent-green: #4ade80;
+  --accent-red: #f87171;
+  --text-main: #efe9fb;
+  --text-muted: #a99fc4;
+  --border-soft: rgba(224, 182, 74, 0.18);
+  --shadow-glow: 0 0 40px rgba(157, 107, 255, 0.22);
+  --radius: 18px;
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  color: var(--text-main);
+  background: var(--bg-deep);
+  line-height: 1.75;
+  overflow-x: hidden;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(157, 107, 255, 0.20), transparent 45%),
+    radial-gradient(circle at 88% 20%, rgba(244, 114, 182, 0.12), transparent 42%),
+    radial-gradient(circle at 50% 95%, rgba(56, 224, 208, 0.10), transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 18% 25%, rgba(255,255,255,0.55), transparent),
+    radial-gradient(1px 1px at 72% 55%, rgba(255,255,255,0.35), transparent),
+    radial-gradient(1.5px 1.5px at 42% 82%, rgba(224,182,74,0.55), transparent),
+    radial-gradient(1px 1px at 92% 12%, rgba(255,255,255,0.45), transparent),
+    radial-gradient(1px 1px at 8% 68%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 60% 35%, rgba(157,107,255,0.5), transparent);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.75;
+}
+.wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+.hero { text-align: center; padding: 90px 0 50px; }
+.hero-badge {
+  display: inline-block;
+  padding: 8px 22px;
+  border: 1px solid var(--border-soft);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  background: rgba(224, 182, 74, 0.06);
+  margin-bottom: 28px;
+  backdrop-filter: blur(6px);
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5.5vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(115deg, #ffffff 0%, #e0b64a 32%, #f472b6 62%, #9d6bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 32px rgba(157, 107, 255, 0.35));
+}
+.hero-sub {
+  font-size: clamp(0.98rem, 2.1vw, 1.15rem);
+  color: var(--text-muted);
+  max-width: 720px;
+  margin: 0 auto;
+  font-style: italic;
+}
+.hero-divider {
+  width: 90px; height: 2px; margin: 34px auto 0;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+.section { margin-bottom: 70px; }
+.section-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--accent-cyan);
+  opacity: 0.6;
+}
+.section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  background: linear-gradient(100deg, #ffffff 0%, #c9b6ff 60%, #9d6bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.section h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--accent-gold);
+  margin: 30px 0 14px;
+}
+.section p {
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  margin-bottom: 14px;
+}
+.section p strong { color: var(--accent-gold); font-weight: 600; }
+.section ul { list-style: none; margin: 14px 0 20px; padding-left: 0; }
+.section ul li {
+  color: var(--text-muted);
+  font-size: 1rem;
+  padding: 6px 0 6px 26px;
+  position: relative;
+}
+.section ul li::before {
+  content: '◆';
+  position: absolute;
+  left: 0; top: 6px;
+  font-size: 0.6rem;
+  color: var(--accent-violet);
+}
+.callout {
+  margin: 24px 0;
+  padding: 22px 26px;
+  background: linear-gradient(135deg, rgba(157, 107, 255, 0.12), rgba(56, 224, 208, 0.06));
+  border-left: 3px solid var(--accent-gold);
+  border-radius: 0 14px 14px 0;
+  color: var(--text-muted);
+  font-size: 0.98rem;
+}
+.callout strong { color: var(--accent-gold); }
+.power-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 24px 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(157, 107, 255, 0.2);
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+}
+.power-table th {
+  background: rgba(157, 107, 255, 0.18);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  text-align: left;
+  font-weight: 600;
+}
+.power-table td {
+  padding: 14px 18px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  border-top: 1px solid rgba(157, 107, 255, 0.12);
+  vertical-align: top;
+}
+.power-table td:first-child { font-weight: 600; }
+.power-strong { color: var(--accent-green) !important; }
+.power-weak { color: var(--accent-red) !important; }
+.power-mid { color: var(--accent-cyan) !important; }
+.signs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-top: 26px;
+}
+.sign-card {
+  position: relative;
+  padding: 24px 22px;
+  background: var(--bg-card);
+  border: 1px solid rgba(157, 107, 255, 0.18);
+  border-radius: var(--radius);
+  backdrop-filter: blur(14px);
+  transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
+}
+.sign-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(224, 182, 74, 0.5);
+  box-shadow: var(--shadow-glow), 0 20px 40px rgba(0,0,0,0.35);
+}
+.sign-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  color: #fff;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sign-card h4 .num {
+  font-size: 0.72rem;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: rgba(224, 182, 74, 0.15);
+  border: 1px solid rgba(224, 182, 74, 0.3);
+  color: var(--accent-gold);
+}
+.sign-block { margin-bottom: 12px; font-size: 0.92rem; line-height: 1.65; }
+.sign-block .label {
+  display: inline-block;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 5px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.label-plus { background: rgba(74, 222, 128, 0.12); color: var(--accent-green); border: 1px solid rgba(74, 222, 128, 0.3); }
+.label-minus { background: rgba(248, 113, 113, 0.12); color: var(--accent-red); border: 1px solid rgba(248, 113, 113, 0.3); }
+.label-rec { background: rgba(224, 182, 74, 0.12); color: var(--accent-gold); border: 1px solid rgba(224, 182, 74, 0.3); }
+.sign-block p { margin: 0; color: var(--text-muted); }
+.summary-box {
+  margin-top: 34px;
+  padding: 26px 28px;
+  background: linear-gradient(160deg, rgba(157, 107, 255, 0.15), rgba(11, 7, 22, 0.9));
+  border: 1px solid rgba(224, 182, 74, 0.25);
+  border-radius: 20px;
+}
+.summary-box h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--accent-gold);
+  margin-bottom: 12px;
+}
+.summary-box p { margin-bottom: 10px; }
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+.lesson-nav a {
+  flex: 1;
+  min-width: 200px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid rgba(157, 107, 255, 0.2);
+  border-radius: 14px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: all 0.35s ease;
+  text-align: center;
+}
+.lesson-nav a:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow);
+}
+.lesson-nav a span {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 4px;
+}
+footer {
+  text-align: center;
+  padding: 40px 0 20px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  border-top: 1px solid rgba(157, 107, 255, 0.12);
+  margin-top: 60px;
+  letter-spacing: 0.05em;
+}
+footer span { color: var(--accent-gold); }
+@media (max-width: 768px) {
+  .wrapper { padding: 0 18px 60px; }
+  .hero { padding: 60px 0 40px; }
+  .section { margin-bottom: 50px; }
+  .sign-card { padding: 20px 18px; }
+  .power-table th, .power-table td { padding: 10px 12px; font-size: 0.85rem; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.8rem; }
+  .signs-grid { grid-template-columns: 1fr; }
+  .power-table { font-size: 0.82rem; }
+  .power-table th, .power-table td { padding: 8px 10px; }
+  .lesson-nav { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header class="hero">
+    <div class="hero-badge">Урок 3 · Мужская планета</div>
+    <h1>Марс</h1>
+    <p class="hero-sub">Воля, сила, напор, решимость. Как ты действуешь и добиваешься своего.</p>
+    <div class="hero-divider"></div>
+  </header>
+
+  <section class="section">
+    <div class="section-label">Основной текст</div>
+    <h2>Что такое Марс в гороскопе</h2>
+
+    <p>Марс — вторая мужская планета. Если Солнце показывает, кто ты есть, то Марс показывает, как ты действуешь.</p>
+
+    <p>Марс отвечает за четыре вещи: <strong>волю, силу, напор и решимость</strong>.</p>
+
+    <p><strong>Воля</strong> — это твоя способность хотеть, выбирать, направлять себя. Внутренний стержень, который говорит: «я так решил». Не «так получилось», не «так надо», а именно «я хочу и я иду». Воля превращает желание в решение.</p>
+
+    <p><strong>Сила</strong> — это твоя способность действовать. Не размышлять, не мечтать, не собираться — а делать. Марс — это мышца воли. Он включается там, где нужно приложить усилие.</p>
+
+    <p><strong>Напор</strong> — это твоя способность идти вперёд, даже когда сопротивляются. Продавливать, настаивать, не отступать. Энергия преодоления.</p>
+
+    <p><strong>Решимость</strong> — это готовность сделать выбор и нести за него ответственность. Не «может быть», не «я подумаю», а «я решил и делаю».</p>
+
+    <h3>Когда Марс сильный</h3>
+    <ul>
+      <li>Быстро переходит от мысли к действию.</li>
+      <li>Умеет добиваться своего.</li>
+      <li>Не боится конфликтов и сопротивления.</li>
+      <li>Защищает себя и своих.</li>
+      <li>Идёт вперёд, даже когда страшно.</li>
+      <li>Умеет сказать «я так решил» и не свернуть.</li>
+    </ul>
+
+    <h3>Когда Марс слабый или поражён</h3>
+    <ul>
+      <li>Долго собирается, но так и не начинает.</li>
+      <li>Избегает конфликтов любой ценой.</li>
+      <li>Не умеет отстаивать себя.</li>
+      <li>Откладывает, тормозит, сомневается.</li>
+      <li>Чувствует бессилие там, где нужно действовать.</li>
+      <li>Не может принять решение и держать его.</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Важно:</strong> Марс — это не агрессия. Агрессия — это искажённый Марс. Здоровый Марс — это спокойная, уверенная сила, которая действует по необходимости и не разрушает ни себя, ни других.
+    </div>
+
+    <p>Второй вопрос: <strong>как у тебя с волей и действием?</strong> Легко ли ты решаешь? Умеешь ли добиваться? Можешь ли отстоять себя, когда нужно?</p>
+
+    <p>Солнце говорит «я есть». Марс говорит «я хочу и я делаю». Это две стороны одной мужской энергии.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Сила планеты</div>
+    <h2>Сила и слабость Марса по знакам</h2>
+
+    <p>Прежде чем читать разбор, посмотри, в каком знаке стоит твой Марс. От этого зависит, насколько сильно звучит твоя воля и способность действовать.</p>
+
+    <table class="power-table">
+      <tr><th>Положение</th><th>Знаки</th><th>Что это значит</th></tr>
+      <tr><td class="power-strong">Сильный</td><td>Овен, Козерог, Лев, Стрелец</td><td>Марс звучит мощно. Воля, сила, напор и решимость проявлены от природы.</td></tr>
+      <tr><td class="power-weak">Слабый</td><td>Рак, Рыбы, Близнецы</td><td>Марс звучит тише. Действие и решимость требуют осознанной работы.</td></tr>
+      <tr><td class="power-mid">Нейтральный</td><td>Остальные знаки</td><td>Марс работает в среднем режиме. Всё зависит от других планет и от самого человека.</td></tr>
+    </table>
+
+    <p>Если твой Марс в сильном знаке — тебе проще решать и действовать. Если в слабом — ты можешь долго собираться, избегать конфликтов или откладывать. Это не слабость характера, это особенность карты. Воля тренируется. Нейтральное положение — это баланс: сила есть, но её нужно включать осознанно.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Разбор по знакам</div>
+    <h2>Марс в знаках</h2>
+
+    <div class="signs-grid">
+
+      <div class="sign-card">
+        <h4>Марс в Овне <span class="num">1</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Прямое действие, скорость, инициатива. Не раздумывает — действует. Смелость, напор, умение начать первым.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Импульсивность, агрессия, нетерпимость. Сначала бьёт, потом думает. Разрушает то, что можно было сохранить.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Учись паузе. Сосчитай до трёх, прежде чем действовать. Не всё нужно продавливать силой.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Марс в Тельце <span class="num">2</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Упорство, выносливость, умение идти к цели долго. Не сдаётся и не торопится. Надёжность в действии.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Упрямство, лень, инертность. Не двигается, пока не припрёт. Копит силу, но не использует.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Двигайся, даже если не хочется. Начни с малого и не останавливайся.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Марс в Близнецах <span class="num">3</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Быстрота ума, ловкость, умение действовать словом. Добивается через информацию и связи. Гибкость, находчивость.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Разбросанность, суета, много слов — мало дела. Начинает одно, бросает, хватается за другое.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Выбери одно направление. Доведи хотя бы одно дело до конца.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Марс в Раке <span class="num">4</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Действие через заботу и защиту. Силён, когда защищает своих. Умеет действовать мягко, но настойчиво.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Пассивная агрессия, обиды, манипуляции. Не говорит прямо, но мстит исподтишка.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Говори прямо. Учись действовать открыто, а не намёками.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Марс во Льве <span class="num">5</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Благородная сила, харизма в действии. Действует красиво и уверенно. Умеет вести за собой.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Тщеславие, драма, желание доказать. Действует ради восхищения, а не ради дела.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Действуй ради дела, а не ради аплодисментов.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Марс в Деве <span class="num">6</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Точность, методичность, умение доводить до результата. Действует аккуратно и продуманно.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Придирчивость, критика, вечное недовольство. Действует из тревоги, а не из силы.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Разреши себе ошибаться. Иногда лучше сделать неидеально, чем не сделать вовсе.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Марс в Весах <span class="num">7</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Действие через дипломатию и партнёрство. Умеет добиваться без конфликта.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Нерешительность, избегание конфликта, пассивность. Не может сказать «нет» и отстоять себя.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Учись говорить «нет». Иногда конфликт — это не разрушение, а честность.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Марс в Скорпионе <span class="num">8</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Глубина, мощь, стратегическое действие. Действует точно и неотвратимо. Умеет выживать через кризисы.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Желание контролировать, мстительность, разрушение. Уничтожает то, что любит, чтобы не потерять.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Отпусти контроль. Позволь себе быть уязвимым.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Марс в Стрельце <span class="num">9</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Действие через веру и цель. Идёт к большой мечте и умеет вдохновить. Смелость, размах.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Хвастовство, обесценивание, бегство от реальности. Обещает больше, чем делает.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Заземляйся. Доводи до конца то, что начал.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Марс в Козероге <span class="num">10</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Целеустремлённость, выдержка, стратегическое действие. Строит надолго и идёт к цели годами.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Холодность, жёсткость, трудоголизм. Действует ради статуса, а не ради жизни.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Позволь себе тепло. Иногда просто будь рядом, не делая ничего полезного.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Марс в Водолее <span class="num">11</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Действие через свободу и идею. Действует не как все и добивается своего.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Отстранённость, бунт без цели, упрямство. Энергия уходит в противостояние.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Не бойся быть близким. Позволь людям подойти ближе.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Марс в Рыбах <span class="num">12</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Действие через интуицию и сострадание. Действует мягко, но точно. Творческая, текучая энергия.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Пассивность, уход от действия, роль жертвы. Не умеет сказать «нет». Энергия уходит в мечты.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Учись границам. Скажи «нет» — и сохранишь себя.</p></div>
+      </div>
+
+    </div>
+
+    <div class="summary-box">
+      <h3>Главный вывод урока</h3>
+      <p>Марс — это воля, сила, напор и решимость. Он показывает, насколько человек способен хотеть, решать, действовать и добиваться.</p>
+      <p><strong>Практика:</strong> вспомни одну ситуацию за последний месяц, где ты хотел что-то изменить или добиться — но не сделал. Честно ответь: что тебя остановило? Страх? Лень? Сомнение? Незнание как? Это и есть точка, где твой Марс либо работает, либо спит.</p>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="sun.html"><span>Назад</span>← Урок 2. Солнце</a>
+      <a href="moon.html"><span>Дальше</span>Урок 4 — Луна →</a>
+    </nav>
+  </section>
+
+  <footer>
+    Курс «Познай себя» · <span>Урок 3</span> из 5
+  </footer>
+
+</div>
+</body>
+</html>

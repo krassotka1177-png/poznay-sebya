@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 5. Венера + Финал — Познай себя</title>
+<style>
+:root {
+  --bg-deep: #0b0716;
+  --bg-card: rgba(32, 20, 58, 0.55);
+  --accent-gold: #e0b64a;
+  --accent-violet: #9d6bff;
+  --accent-pink: #f472b6;
+  --accent-cyan: #38e0d0;
+  --accent-green: #4ade80;
+  --accent-red: #f87171;
+  --text-main: #efe9fb;
+  --text-muted: #a99fc4;
+  --border-soft: rgba(224, 182, 74, 0.18);
+  --shadow-glow: 0 0 40px rgba(157, 107, 255, 0.22);
+  --radius: 18px;
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  color: var(--text-main);
+  background: var(--bg-deep);
+  line-height: 1.75;
+  overflow-x: hidden;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(157, 107, 255, 0.20), transparent 45%),
+    radial-gradient(circle at 88% 20%, rgba(244, 114, 182, 0.12), transparent 42%),
+    radial-gradient(circle at 50% 95%, rgba(56, 224, 208, 0.10), transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 18% 25%, rgba(255,255,255,0.55), transparent),
+    radial-gradient(1px 1px at 72% 55%, rgba(255,255,255,0.35), transparent),
+    radial-gradient(1.5px 1.5px at 42% 82%, rgba(224,182,74,0.55), transparent),
+    radial-gradient(1px 1px at 92% 12%, rgba(255,255,255,0.45), transparent),
+    radial-gradient(1px 1px at 8% 68%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 60% 35%, rgba(157,107,255,0.5), transparent);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.75;
+}
+.wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+.hero { text-align: center; padding: 90px 0 50px; }
+.hero-badge {
+  display: inline-block;
+  padding: 8px 22px;
+  border: 1px solid var(--border-soft);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  background: rgba(224, 182, 74, 0.06);
+  margin-bottom: 28px;
+  backdrop-filter: blur(6px);
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5.5vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(115deg, #ffffff 0%, #e0b64a 32%, #f472b6 62%, #9d6bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 32px rgba(157, 107, 255, 0.35));
+}
+.hero-sub {
+  font-size: clamp(0.98rem, 2.1vw, 1.15rem);
+  color: var(--text-muted);
+  max-width: 720px;
+  margin: 0 auto;
+  font-style: italic;
+}
+.hero-divider {
+  width: 90px; height: 2px; margin: 34px auto 0;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+.section { margin-bottom: 70px; }
+.section-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--accent-cyan);
+  opacity: 0.6;
+}
+.section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  background: linear-gradient(100deg, #ffffff 0%, #c9b6ff 60%, #9d6bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.section h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--accent-gold);
+  margin: 30px 0 14px;
+}
+.section p {
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  margin-bottom: 14px;
+}
+.section p strong { color: var(--accent-gold); font-weight: 600; }
+.section ul { list-style: none; margin: 14px 0 20px; padding-left: 0; }
+.section ul li {
+  color: var(--text-muted);
+  font-size: 1rem;
+  padding: 6px 0 6px 26px;
+  position: relative;
+}
+.section ul li::before {
+  content: '◆';
+  position: absolute;
+  left: 0; top: 6px;
+  font-size: 0.6rem;
+  color: var(--accent-violet);
+}
+.callout {
+  margin: 24px 0;
+  padding: 22px 26px;
+  background: linear-gradient(135deg, rgba(157, 107, 255, 0.12), rgba(56, 224, 208, 0.06));
+  border-left: 3px solid var(--accent-gold);
+  border-radius: 0 14px 14px 0;
+  color: var(--text-muted);
+  font-size: 0.98rem;
+}
+.callout strong { color: var(--accent-gold); }
+.power-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 24px 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(157, 107, 255, 0.2);
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+}
+.power-table th {
+  background: rgba(157, 107, 255, 0.18);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  text-align: left;
+  font-weight: 600;
+}
+.power-table td {
+  padding: 14px 18px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  border-top: 1px solid rgba(157, 107, 255, 0.12);
+  vertical-align: top;
+}
+.power-table td:first-child { font-weight: 600; }
+.power-strong { color: var(--accent-green) !important; }
+.power-weak { color: var(--accent-red) !important; }
+.power-mid { color: var(--accent-cyan) !important; }
+.signs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-top: 26px;
+}
+.sign-card {
+  position: relative;
+  padding: 24px 22px;
+  background: var(--bg-card);
+  border: 1px solid rgba(157, 107, 255, 0.18);
+  border-radius: var(--radius);
+  backdrop-filter: blur(14px);
+  transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
+}
+.sign-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(224, 182, 74, 0.5);
+  box-shadow: var(--shadow-glow), 0 20px 40px rgba(0,0,0,0.35);
+}
+.sign-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  color: #fff;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sign-card h4 .num {
+  font-size: 0.72rem;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: rgba(224, 182, 74, 0.15);
+  border: 1px solid rgba(224, 182, 74, 0.3);
+  color: var(--accent-gold);
+}
+.sign-block { margin-bottom: 12px; font-size: 0.92rem; line-height: 1.65; }
+.sign-block .label {
+  display: inline-block;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 5px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.label-plus { background: rgba(74, 222, 128, 0.12); color: var(--accent-green); border: 1px solid rgba(74, 222, 128, 0.3); }
+.label-minus { background: rgba(248, 113, 113, 0.12); color: var(--accent-red); border: 1px solid rgba(248, 113, 113, 0.3); }
+.label-rec { background: rgba(224, 182, 74, 0.12); color: var(--accent-gold); border: 1px solid rgba(224, 182, 74, 0.3); }
+.sign-block p { margin: 0; color: var(--text-muted); }
+.summary-box {
+  margin-top: 34px;
+  padding: 26px 28px;
+  background: linear-gradient(160deg, rgba(157, 107, 255, 0.15), rgba(11, 7, 22, 0.9));
+  border: 1px solid rgba(224, 182, 74, 0.25);
+  border-radius: 20px;
+}
+.summary-box h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--accent-gold);
+  margin-bottom: 12px;
+}
+.summary-box p { margin-bottom: 10px; }
+
+/* FINAL SECTION */
+.final-hero {
+  text-align: center;
+  padding: 60px 0 40px;
+  margin-top: 40px;
+  border-top: 1px solid rgba(157, 107, 255, 0.15);
+}
+.final-hero .hero-badge { margin-bottom: 22px; }
+.final-hero h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+  background: linear-gradient(115deg, #ffffff 0%, #e0b64a 40%, #f472b6 70%, #9d6bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin-bottom: 18px;
+  filter: drop-shadow(0 0 28px rgba(157, 107, 255, 0.3));
+}
+.final-hero p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 680px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+.variants {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+.variant {
+  padding: 28px 26px;
+  background: var(--bg-card);
+  border: 1px solid rgba(157, 107, 255, 0.18);
+  border-radius: var(--radius);
+  backdrop-filter: blur(14px);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+.variant::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-violet), var(--accent-gold), var(--accent-pink));
+  opacity: 0.5;
+  transition: opacity 0.4s ease;
+}
+.variant:hover {
+  transform: translateY(-6px);
+  border-color: rgba(224, 182, 74, 0.45);
+  box-shadow: var(--shadow-glow);
+}
+.variant:hover::after { opacity: 1; }
+.variant .variant-num {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--accent-gold);
+  margin-bottom: 6px;
+  line-height: 1;
+}
+.variant h4 {
+  font-size: 1.05rem;
+  color: #fff;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.variant p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.variant .do {
+  font-size: 0.9rem;
+  color: var(--accent-cyan);
+  font-style: italic;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(56, 224, 208, 0.25);
+}
+.variant .do strong { color: var(--accent-cyan); font-style: normal; }
+
+.final-word {
+  text-align: center;
+  padding: 50px 30px;
+  margin-top: 50px;
+  border-radius: 24px;
+  background: linear-gradient(160deg, rgba(157, 107, 255, 0.18), rgba(11, 7, 22, 0.9));
+  border: 1px solid rgba(224, 182, 74, 0.22);
+  position: relative;
+  overflow: hidden;
+}
+.final-word::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(224,182,74,0.10), transparent 70%);
+  pointer-events: none;
+}
+.final-word h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  background: linear-gradient(100deg, #fff, #e0b64a, #f472b6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin-bottom: 18px;
+}
+.final-word p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 640px;
+  margin: 0 auto 12px;
+}
+.final-word .final-line {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--accent-gold);
+  margin-top: 28px;
+}
+
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+.lesson-nav a {
+  flex: 1;
+  min-width: 200px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid rgba(157, 107, 255, 0.2);
+  border-radius: 14px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: all 0.35s ease;
+  text-align: center;
+}
+.lesson-nav a:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow);
+}
+.lesson-nav a span {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 4px;
+}
+footer {
+  text-align: center;
+  padding: 40px 0 20px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  border-top: 1px solid rgba(157, 107, 255, 0.12);
+  margin-top: 60px;
+  letter-spacing: 0.05em;
+}
+footer span { color: var(--accent-gold); }
+@media (max-width: 768px) {
+  .wrapper { padding: 0 18px 60px; }
+  .hero { padding: 60px 0 40px; }
+  .section { margin-bottom: 50px; }
+  .sign-card { padding: 20px 18px; }
+  .power-table th, .power-table td { padding: 10px 12px; font-size: 0.85rem; }
+  .final-word { padding: 40px 22px; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.8rem; }
+  .signs-grid { grid-template-columns: 1fr; }
+  .variants { grid-template-columns: 1fr; }
+  .power-table { font-size: 0.82rem; }
+  .power-table th, .power-table td { padding: 8px 10px; }
+  .lesson-nav { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header class="hero">
+    <div class="hero-badge">Урок 5 · Женская планета</div>
+    <h1>Венера</h1>
+    <p class="hero-sub">Притягательность, женственность, любовь. Как ты притягиваешь и как любишь.</p>
+    <div class="hero-divider"></div>
+  </header>
+
+  <section class="section">
+    <div class="section-label">Основной текст</div>
+    <h2>Что такое Венера в гороскопе</h2>
+
+    <p>Венера — вторая женская планета. Если Луна показывает, что человек чувствует, то Венера показывает, как он притягивает и как любит.</p>
+
+    <p>Венера отвечает за три вещи: <strong>притягательность, женственность и любовь</strong>.</p>
+
+    <p><strong>Притягательность</strong> — это твоя способность нравиться. Не через усилие, а через естественное обаяние. Венера — это твой вкус, твой стиль, твоё умение подать себя. Она делает человека магнитом.</p>
+
+    <p><strong>Женственность</strong> — это твоя мягкость, плавность, умение быть нежным. Не про пол, а про качество энергии. Женственность — это умение принимать, наслаждаться, позволять. Это текучесть, а не напор.</p>
+
+    <p><strong>Любовь</strong> — это твоя способность любить и быть любимым. Как ты строишь отношения. Что для тебя ценно. Как ты проявляешь любовь и как принимаешь её.</p>
+
+    <h3>Когда Венера сильная</h3>
+    <ul>
+      <li>Притягивает внимание без усилий.</li>
+      <li>Имеет вкус и чувство красоты.</li>
+      <li>Умеет наслаждаться жизнью.</li>
+      <li>Легко любит и легко принимает любовь.</li>
+      <li>Создаёт вокруг себя атмосферу тепла и привлекательности.</li>
+    </ul>
+
+    <h3>Когда Венера слабая или поражена</h3>
+    <ul>
+      <li>Не чувствует себя привлекательным.</li>
+      <li>Не умеет принимать комплименты и подарки.</li>
+      <li>Боится любви или выбирает сложные отношения.</li>
+      <li>Не умеет наслаждаться.</li>
+      <li>Чувствует себя нежеланным.</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Важно:</strong> Венера — это не про внешность. Это про внутреннее свечение. Человек с сильной Венерой притягивает не потому, что идеально выглядит, а потому что у него внутри есть свет, который хочется видеть рядом.
+    </div>
+
+    <p>Четвёртый вопрос: <strong>как у тебя с любовью?</strong> Чувствуешь ли ты себя привлекательным? Умеешь ли принимать любовь? Умеешь ли наслаждаться жизнью? Умеешь ли быть мягким и текучим?</p>
+
+    <p>Луна чувствует. Венера притягивает. Вместе они создают женскую энергию во всей её полноте.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Сила планеты</div>
+    <h2>Сила и слабость Венеры по знакам</h2>
+
+    <p>Прежде чем читать разбор, посмотри, в каком знаке стоит твоя Венера. От этого зависит, насколько сильно звучит твоя притягательность, женственность и способность любить.</p>
+
+    <table class="power-table">
+      <tr><th>Положение</th><th>Знаки</th><th>Что это значит</th></tr>
+      <tr><td class="power-strong">Сильная</td><td>Телец, Весы, Рыбы</td><td>Венера звучит ярко. Притягательность, мягкость и умение любить проявлены от природы.</td></tr>
+      <tr><td class="power-weak">Слабая</td><td>Дева, Рак, Козерог</td><td>Венера звучит тише. Принятие любви, наслаждение и притягательность требуют осознанной работы.</td></tr>
+      <tr><td class="power-mid">Нейтральная</td><td>Остальные знаки</td><td>Венера работает в среднем режиме. Всё зависит от других планет и от самого человека.</td></tr>
+    </table>
+
+    <p>Если твоя Венера в сильном знаке — ты легко притягиваешь, умеешь любить и наслаждаться. Если в слабом — ты можешь не чувствовать себя привлекательным, бояться любви или выбирать сложные отношения. Это не про внешность, это про внутреннее разрешение быть любимым. Нейтральное положение — это баланс: способность есть, но её нужно раскрывать.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Разбор по знакам</div>
+    <h2>Венера в знаках</h2>
+
+    <div class="signs-grid">
+
+      <div class="sign-card">
+        <h4>Венера в Овне <span class="num">1</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Яркая, страстная притягательность. Любит смело и прямо. Умеет завоевать и вдохновить. Искренность и огонь в чувствах.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Импульсивность, эгоизм, желание только брать. Любовь превращается в завоевание. Быстро загорается и быстро остывает.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Учись слушать. Страсть без внимания к другому превращается в игру. Замечай того, кто рядом.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Венера в Тельце <span class="num">2</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Чувственная, надёжная притягательность. Любит глубоко и верно. Умеет создавать уют и наслаждаться простыми вещами.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Собственничество, упрямство, страх перемен. Любовь превращается в обладание. Держится за отношения, даже если они не работают.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Позволяй любви дышать. Верность без свободы превращается в клетку. Отпускай то, что отжило.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Венера в Близнецах <span class="num">3</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Лёгкая, общительная притягательность. Влюбляет через слово и ум. Умеет говорить о чувствах и понимать других.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Поверхностность, непостоянство, страх глубины. Любовь превращается в болтовню. Много слов — мало чувства.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Учись оставаться. Без глубины лёгкость превращается в шум. Позволь себе почувствовать, а не только сказать.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Венера в Раке <span class="num">4</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Тёплая, заботливая притягательность. Любит глубоко и преданно. Умеет создать дом и согреть. Нежность, верность.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Обидчивость, зависимость, манипуляции через чувство вины. Любовь превращается в цепляние. Боится быть брошенным.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Не прячься в панцирь. Тепло без свободы превращается в ловушку. Говори о чувствах прямо.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Венера во Льве <span class="num">5</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Яркая, щедрая притягательность. Любит красиво и открыто. Умеет восхищать и вдохновлять. Благородство, верность.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Тщеславие, драма, желание восхищения. Любовь превращается в спектакль. Требует внимания и не умеет давать его другим.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Люби ради любви, а не ради аплодисментов. Замечай партнёра, и твоё тепло станет настоящим.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Венера в Деве <span class="num">6</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Точная, заботливая притягательность. Любит через дело и внимание к деталям. Умеет поддержать и позаботиться. Скромность, верность.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Критичность, придирчивость, вечное недовольство. Любовь превращается в контроль. Ищет идеал и не находит.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Разреши себе и другому быть неидеальным. Люби человека, а не идею о нём.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Венера в Весах <span class="num">7</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Гармоничная, обаятельная притягательность. Любит красиво и умеет строить отношения. Чувство баланса, нежность. Прирождённый партнёр.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Зависимость от партнёра, страх одиночества, потеря себя. Любовь превращается в подстраивание. Не может сказать «нет».</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Учись выбирать себя. Баланс начинается с тебя. Скажи «я хочу» — и не извиняйся.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Венера в Скорпионе <span class="num">8</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Глубокая, страстная притягательность. Любит на всю глубину. Умеет проходить через кризисы. Верность, страсть, магнетизм.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Ревность, подозрительность, желание контролировать. Любовь превращается в тёмные игры. Проверяет партнёра и разрушает то, что любит.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Доверяй. Глубина без доверия превращается в тюрьму. Настоящая любовь не боится открыться.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Венера в Стрельце <span class="num">9</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Широкая, свободная притягательность. Любит через веру и смысл. Умеет вдохновлять и видеть перспективу. Лёгкость, честность.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Бегство от глубины, обесценивание, поверхностность. Любовь превращается в приключение. Обещает больше, чем чувствует.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Заземляйся. Позволь себе глубоко привязаться — это не потеря свободы.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Венера в Козероге <span class="num">10</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Глубокая, верная притягательность. Любит серьёзно и надолго. Умеет быть опорой и строить отношения годами. Ответственность, зрелость.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Холодность, закрытость, любовь через статус. Чувства подавляются. Считает, что любовь нужно заслужить. Остаётся один со своей глубиной.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Позволь себе тепло. Глубина без тепла превращается в холод. Иногда просто скажи, что любишь.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Венера в Водолее <span class="num">11</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Свободная, дружелюбная притягательность. Любит через свободу и равенство. Умеет быть рядом, не привязываясь. Оригинальность, широта.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Отстранённость, страх близости, любовь на расстоянии. Чувства прячутся за дружбой. Не подпускает близко.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Не бойся быть близким. Свобода без тепла превращается в одиночество. Позволь людям подойти ближе.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Венера в Рыбах <span class="num">12</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Мягкая, всепроникающая притягательность. Любит глубоко и безусловно. Умеет сострадать и прощать. Нежность, романтика, творческая глубина.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Растворение в партнёре, роль жертвы, уход от реальности. Любовь превращается в жертвенность. Не умеет сказать «нет».</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Учись границам. Мягкость без опоры превращается в растворение. Скажи «нет» — и сохранишь себя.</p></div>
+      </div>
+
+    </div>
+
+    <div class="summary-box">
+      <h3>Главный вывод урока</h3>
+      <p>Венера — это притягательность, женственность и любовь. Она показывает, насколько человек умеет притягивать, любить и наслаждаться жизнью.</p>
+      <p><strong>Практика:</strong> задай себе вопрос: «Что я сегодня сделал для того, чтобы почувствовать себя привлекательным и получить удовольствие?» Если ответа нет — это не упрёк, а точка внимания. Венера любит, когда её кормят красотой и радостью.</p>
+    </div>
+  </section>
+
+  <!-- ============ ФИНАЛ ============ -->
+  <section class="section" id="final">
+    <div class="final-hero">
+      <div class="hero-badge">Финал · Собираем всё вместе</div>
+      <h2>Твой внутренний баланс</h2>
+      <p>Мы разобрали четыре планеты. Теперь соберём их вместе и посмотрим, какая энергия ведёт, а какая поддерживает.</p>
+    </div>
+
+    <h3>Мужские планеты</h3>
+    <ul>
+      <li><strong>Солнце</strong> — твоё Я, уверенность в себе, способность светить и вести за собой.</li>
+      <li><strong>Марс</strong> — воля, сила, напор, решимость.</li>
+    </ul>
+
+    <h3>Женские планеты</h3>
+    <ul>
+      <li><strong>Луна</strong> — чувственность, интуиция, забота.</li>
+      <li><strong>Венера</strong> — притягательность, женственность, любовь.</li>
+    </ul>
+
+    <p>Теперь посмотри на свой гороскоп и честно оцени: какие из этих четырёх планет у тебя звучат сильнее? Какие слабее?</p>
+
+    <div class="variants">
+      <div class="variant">
+        <div class="variant-num">1</div>
+        <h4>Сильные мужские, слабые женские</h4>
+        <p>Ты человек действия. Ты ведёшь, добиваешься, проявляешься. Но тебе может не хватать мягкости, умения чувствовать и наслаждаться.</p>
+        <div class="do"><strong>Что делать:</strong> развивай Луну и Венеру. Учись чувствовать и принимать. Позволяй себе отдыхать и заботиться о себе.</div>
+      </div>
+
+      <div class="variant">
+        <div class="variant-num">2</div>
+        <h4>Сильные женские, слабые мужские</h4>
+        <p>Ты человек чувства. Ты глубокий, принимающий, притягательный. Но тебе может не хватать воли и решимости.</p>
+        <div class="do"><strong>Что делать:</strong> развивай Солнце и Марс. Начни с малого — говори «я хочу», принимай решения, делай первый шаг.</div>
+      </div>
+
+      <div class="variant">
+        <div class="variant-num">3</div>
+        <h4>Обе энергии сильные</h4>
+        <p>Ты целостный человек. Умеешь и действовать, и чувствовать. Твоя задача — не уходить в крайности и держать баланс.</p>
+        <div class="do"><strong>Что делать:</strong> следи за равновесием. Слишком много действия — добавь чувства. Слишком много чувства — добавь действия.</div>
+      </div>
+
+      <div class="variant">
+        <div class="variant-num">4</div>
+        <h4>Обе энергии слабые</h4>
+        <p>Ты как будто ещё не проснулся. Возможно, тебя подавляли, или ты сам себя заглушал. Это не приговор. Это точка старта.</p>
+        <div class="do"><strong>Что делать:</strong> начни с одной планеты. С Солнца — учись говорить «я хочу». Или с Луны — учись чувствовать и заботиться о себе.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 34px;">
+      <strong>Главное:</strong> нет правильного или неправильного баланса. Есть твой баланс. Задача не в том, чтобы стать другим. Задача — увидеть себя честно и научиться пользоваться тем, что у тебя есть.
+    </div>
+
+    <h3>Главный вывод курса</h3>
+    <p>Ты — это сочетание мужской и женской энергии. Твоя задача — не переделать себя, а увидеть свой баланс и осознанно его использовать.</p>
+
+    <h3>Практика после курса</h3>
+    <p>Возьми лист и выпиши:</p>
+    <ul>
+      <li>Какая из четырёх планет у меня самая сильная?</li>
+      <li>Какая самая слабая?</li>
+      <li>Что я делаю, когда живу по сильной планете?</li>
+      <li>Что происходит, когда я пытаюсь жить не по своей природе?</li>
+    </ul>
+    <p>Этот лист — твоя карта на ближайшие месяцы. Возвращайся к нему, когда будешь сомневаться в себе.</p>
+
+    <div class="final-word">
+      <h3>Ты прошёл весь путь</h3>
+      <p>От знакомства с четырьмя планетами до понимания своего баланса.</p>
+      <p>Теперь у тебя есть карта. Не идеальная, не окончательная — но твоя. И этого достаточно, чтобы начать жить более осознанно.</p>
+      <p class="final-line">Спасибо, что был на этом пути.</p>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="moon.html"><span>Назад</span>← Урок 4. Луна</a>
+      <a href="index.html"><span>В начало</span>К оглавлению курса →</a>
+    </nav>
+  </section>
+
+  <footer>
+    Курс «Познай себя» · <span>Урок 5</span> + Финал
+  </footer>
+
+</div>
+</body>
+</html>

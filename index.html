@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Познай себя — мини-курс по астрологии</title>
+<style>
+:root {
+  --bg-deep: #0b0716;
+  --bg-card: rgba(32, 20, 58, 0.55);
+  --accent-gold: #e0b64a;
+  --accent-violet: #9d6bff;
+  --accent-pink: #f472b6;
+  --accent-cyan: #38e0d0;
+  --accent-green: #4ade80;
+  --accent-red: #f87171;
+  --text-main: #efe9fb;
+  --text-muted: #a99fc4;
+  --border-soft: rgba(224, 182, 74, 0.18);
+  --shadow-glow: 0 0 40px rgba(157, 107, 255, 0.22);
+  --radius: 18px;
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  color: var(--text-main);
+  background: var(--bg-deep);
+  line-height: 1.75;
+  overflow-x: hidden;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(157, 107, 255, 0.20), transparent 45%),
+    radial-gradient(circle at 88% 20%, rgba(244, 114, 182, 0.12), transparent 42%),
+    radial-gradient(circle at 50% 95%, rgba(56, 224, 208, 0.10), transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 18% 25%, rgba(255,255,255,0.55), transparent),
+    radial-gradient(1px 1px at 72% 55%, rgba(255,255,255,0.35), transparent),
+    radial-gradient(1.5px 1.5px at 42% 82%, rgba(224,182,74,0.55), transparent),
+    radial-gradient(1px 1px at 92% 12%, rgba(255,255,255,0.45), transparent),
+    radial-gradient(1px 1px at 8% 68%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 60% 35%, rgba(157,107,255,0.5), transparent);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.75;
+}
+.wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+.hero { text-align: center; padding: 100px 0 60px; }
+.hero-badge {
+  display: inline-block;
+  padding: 8px 22px;
+  border: 1px solid var(--border-soft);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  background: rgba(224, 182, 74, 0.06);
+  margin-bottom: 28px;
+  backdrop-filter: blur(6px);
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  background: linear-gradient(115deg, #ffffff 0%, #e0b64a 32%, #f472b6 62%, #9d6bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin-bottom: 22px;
+  filter: drop-shadow(0 0 32px rgba(157, 107, 255, 0.35));
+}
+.hero-sub {
+  font-size: clamp(0.98rem, 2.1vw, 1.2rem);
+  color: var(--text-muted);
+  max-width: 720px;
+  margin: 0 auto;
+  font-style: italic;
+}
+.hero-divider {
+  width: 90px; height: 2px; margin: 38px auto 0;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+.toc {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 50px 0 80px;
+}
+.toc a {
+  display: block;
+  padding: 18px 20px;
+  background: var(--bg-card);
+  border: 1px solid rgba(157, 107, 255, 0.18);
+  border-radius: 14px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.35s ease;
+  backdrop-filter: blur(10px);
+}
+.toc a:hover {
+  border-color: var(--accent-gold);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+  color: var(--accent-gold);
+}
+.toc a span {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 6px;
+}
+.section { margin-bottom: 80px; }
+.section-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--accent-cyan);
+  opacity: 0.6;
+}
+.section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.8vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  background: linear-gradient(100deg, #ffffff 0%, #c9b6ff 60%, #9d6bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.section h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--accent-gold);
+  margin: 30px 0 14px;
+}
+.section p {
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  margin-bottom: 14px;
+}
+.section p strong, .highlight { color: var(--accent-gold); font-weight: 600; }
+.section ul { list-style: none; margin: 14px 0 20px; padding-left: 0; }
+.section ul li {
+  color: var(--text-muted);
+  font-size: 1rem;
+  padding: 6px 0 6px 26px;
+  position: relative;
+}
+.section ul li::before {
+  content: '◆';
+  position: absolute;
+  left: 0; top: 6px;
+  font-size: 0.6rem;
+  color: var(--accent-violet);
+}
+.section a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(56, 224, 208, 0.4);
+  transition: all 0.3s ease;
+}
+.section a:hover {
+  color: var(--accent-gold);
+  border-bottom-color: var(--accent-gold);
+}
+.callout {
+  margin: 24px 0;
+  padding: 22px 26px;
+  background: linear-gradient(135deg, rgba(157, 107, 255, 0.12), rgba(56, 224, 208, 0.06));
+  border-left: 3px solid var(--accent-gold);
+  border-radius: 0 14px 14px 0;
+  color: var(--text-muted);
+  font-size: 0.98rem;
+}
+.callout strong { color: var(--accent-gold); }
+.power-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 24px 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(157, 107, 255, 0.2);
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+}
+.power-table th {
+  background: rgba(157, 107, 255, 0.18);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  text-align: left;
+  font-weight: 600;
+}
+.power-table td {
+  padding: 14px 18px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  border-top: 1px solid rgba(157, 107, 255, 0.12);
+  vertical-align: top;
+}
+.power-table td:first-child { font-weight: 600; }
+.summary-box {
+  margin-top: 34px;
+  padding: 26px 28px;
+  background: linear-gradient(160deg, rgba(157, 107, 255, 0.15), rgba(11, 7, 22, 0.9));
+  border: 1px solid rgba(224, 182, 74, 0.25);
+  border-radius: 20px;
+}
+.summary-box h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--accent-gold);
+  margin-bottom: 12px;
+}
+.summary-box p { margin-bottom: 10px; }
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+.lesson-nav a {
+  flex: 1;
+  min-width: 200px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid rgba(157, 107, 255, 0.2);
+  border-radius: 14px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: all 0.35s ease;
+  text-align: center;
+}
+.lesson-nav a:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow);
+}
+.lesson-nav a span {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 4px;
+}
+footer {
+  text-align: center;
+  padding: 40px 0 20px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  border-top: 1px solid rgba(157, 107, 255, 0.12);
+  margin-top: 60px;
+  letter-spacing: 0.05em;
+}
+footer span { color: var(--accent-gold); }
+@media (max-width: 768px) {
+  .wrapper { padding: 0 18px 60px; }
+  .hero { padding: 70px 0 50px; }
+  .section { margin-bottom: 60px; }
+  .power-table th, .power-table td { padding: 10px 12px; font-size: 0.85rem; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 2rem; }
+  .power-table { font-size: 0.82rem; }
+  .power-table th, .power-table td { padding: 8px 10px; }
+  .lesson-nav { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header class="hero">
+    <div class="hero-badge">Мини-курс · Астрология</div>
+    <h1>Познай себя</h1>
+    <p class="hero-sub">4 планеты, которые раскрывают твою природу. Солнце, Марс, Луна, Венера — четыре опоры, по которым можно понять, какой энергии в тебе больше: мужской или женской.</p>
+    <div class="hero-divider"></div>
+  </header>
+
+  <nav class="toc">
+    <a href="index.html"><span>Урок 1</span>Введение: две энергии внутри тебя</a>
+    <a href="sun.html"><span>Урок 2</span>Солнце — твоё Я</a>
+    <a href="mars.html"><span>Урок 3</span>Марс — воля и сила</a>
+    <a href="moon.html"><span>Урок 4</span>Луна — чувственность</a>
+    <a href="venus.html"><span>Урок 5</span>Венера — любовь</a>
+    <a href="venus.html#final"><span>Финал</span>Твой внутренний баланс</a>
+  </nav>
+
+  <section class="section">
+    <div class="section-label">Урок 1</div>
+    <h2>Введение: две энергии внутри тебя</h2>
+
+    <p>В каждом человеке есть две энергии — мужская и женская. Это не про пол и не про биологию. Это про то, как ты действуешь и как ты чувствуешь.</p>
+
+    <p><strong>Мужская энергия</strong> — это про движение, волю, решение, напор, действие, достижение. Она направлена вовне: сделать, добиться, защитить, повести за собой.</p>
+
+    <p><strong>Женская энергия</strong> — это про чувство, принятие, мягкость, заботу, интуицию, умение наслаждаться. Она направлена внутрь: почувствовать, принять, согреть, восстановиться.</p>
+
+    <p>В астрологии за эти две энергии отвечают четыре планеты.</p>
+
+    <h3>Две мужские планеты</h3>
+    <ul>
+      <li><strong>Солнце</strong> — твоё Я, уверенность в себе, способность светить и вести за собой.</li>
+      <li><strong>Марс</strong> — воля, сила, напор, решимость.</li>
+    </ul>
+
+    <h3>Две женские планеты</h3>
+    <ul>
+      <li><strong>Луна</strong> — чувственность, интуиция, забота.</li>
+      <li><strong>Венера</strong> — притягательность, женственность, любовь.</li>
+    </ul>
+
+    <p>Это и есть четыре опоры, по которым можно понять природу человека.</p>
+
+    <div class="callout">
+      <strong>Важно:</strong> у мужчин могут преобладать женские планеты. У женщин — мужские. И это нормально. Это не отклонение, не «неправильность» и не повод себя переделывать. Это просто твоя природа — так собрана твоя карта.
+    </div>
+
+    <p>Когда мы смотрим на эти четыре планеты в гороскопе, мы видим, какой энергии в тебе больше, какая ведёт, а какая поддерживает. И дальше уже можно понять, почему ты в одних ситуациях действуешь жёстко и решительно, а в других — мягко и интуитивно.</p>
+
+    <h3>Как построить свой гороскоп</h3>
+    <p>Чтобы увидеть свои четыре планеты, нужно построить натальную карту. Это бесплатно и занимает несколько минут.</p>
+    <ul>
+      <li>Скачай PDF-инструкцию: <a href="https://drive.google.com/file/d/1b9p7m1-r7sN3u4vNkDuS2NGiV_U2gD9j/view?usp=sharing" target="_blank" rel="noopener">Как построить гороскоп (PDF)</a></li>
+      <li>Посмотри видео-инструкцию: <a href="https://drive.google.com/file/d/13tBIWc8bYaqgWBtEgTqNNth4fp-47FI0/view?usp=sharing" target="_blank" rel="noopener">Как построить гороскоп (видео)</a></li>
+      <li>Введи дату рождения, время и город.</li>
+      <li>Если не знаешь точное время — укажи примерное, но помни: чем точнее, тем корректнее карта.</li>
+      <li>Нажми «Построить гороскоп».</li>
+    </ul>
+
+    <h3>Найди в своём гороскопе 4 планеты</h3>
+    <p>Они обозначаются так: <strong>Солнце — Со</strong>, <strong>Луна — Мо</strong>, <strong>Венера — Ve</strong>, <strong>Марс — Ма</strong>.</p>
+
+    <p>Посмотри, в каких знаках они стоят. У каждого знака есть номер — от 1 до 12:</p>
+
+    <table class="power-table">
+      <tr><th>Номер</th><th>Знак</th><th>Номер</th><th>Знак</th></tr>
+      <tr><td>1</td><td>Овен</td><td>7</td><td>Весы</td></tr>
+      <tr><td>2</td><td>Телец</td><td>8</td><td>Скорпион</td></tr>
+      <tr><td>3</td><td>Близнецы</td><td>9</td><td>Стрелец</td></tr>
+      <tr><td>4</td><td>Рак</td><td>10</td><td>Козерог</td></tr>
+      <tr><td>5</td><td>Лев</td><td>11</td><td>Водолей</td></tr>
+      <tr><td>6</td><td>Дева</td><td>12</td><td>Рыбы</td></tr>
+    </table>
+
+    <div class="summary-box">
+      <h3>Главный вывод урока</h3>
+      <p>В тебе есть и мужская, и женская энергия. Их баланс виден по четырём планетам: Солнце и Марс — мужские, Луна и Венера — женские. У мужчин может преобладать женская энергия, у женщин — мужская, и это естественно.</p>
+      <p><strong>Практика:</strong> запомни четыре планеты и их качества. На следующих уроках мы разберём каждую отдельно, а в финале соберём всё вместе.</p>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="sun.html"><span>Дальше</span>Урок 2 — Солнце →</a>
+    </nav>
+  </section>
+
+  <footer>
+    Курс «Познай себя» · <span>4 планеты</span> твоей природы
+  </footer>
+
+</div>
+</body>
+</html>

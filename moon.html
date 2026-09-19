@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 4. Луна — Познай себя</title>
+<style>
+:root {
+  --bg-deep: #0b0716;
+  --bg-card: rgba(32, 20, 58, 0.55);
+  --accent-gold: #e0b64a;
+  --accent-violet: #9d6bff;
+  --accent-pink: #f472b6;
+  --accent-cyan: #38e0d0;
+  --accent-green: #4ade80;
+  --accent-red: #f87171;
+  --text-main: #efe9fb;
+  --text-muted: #a99fc4;
+  --border-soft: rgba(224, 182, 74, 0.18);
+  --shadow-glow: 0 0 40px rgba(157, 107, 255, 0.22);
+  --radius: 18px;
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  color: var(--text-main);
+  background: var(--bg-deep);
+  line-height: 1.75;
+  overflow-x: hidden;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(157, 107, 255, 0.20), transparent 45%),
+    radial-gradient(circle at 88% 20%, rgba(244, 114, 182, 0.12), transparent 42%),
+    radial-gradient(circle at 50% 95%, rgba(56, 224, 208, 0.10), transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 18% 25%, rgba(255,255,255,0.55), transparent),
+    radial-gradient(1px 1px at 72% 55%, rgba(255,255,255,0.35), transparent),
+    radial-gradient(1.5px 1.5px at 42% 82%, rgba(224,182,74,0.55), transparent),
+    radial-gradient(1px 1px at 92% 12%, rgba(255,255,255,0.45), transparent),
+    radial-gradient(1px 1px at 8% 68%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 60% 35%, rgba(157,107,255,0.5), transparent);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.75;
+}
+.wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+.hero { text-align: center; padding: 90px 0 50px; }
+.hero-badge {
+  display: inline-block;
+  padding: 8px 22px;
+  border: 1px solid var(--border-soft);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  background: rgba(224, 182, 74, 0.06);
+  margin-bottom: 28px;
+  backdrop-filter: blur(6px);
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5.5vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(115deg, #ffffff 0%, #e0b64a 32%, #f472b6 62%, #9d6bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 32px rgba(157, 107, 255, 0.35));
+}
+.hero-sub {
+  font-size: clamp(0.98rem, 2.1vw, 1.15rem);
+  color: var(--text-muted);
+  max-width: 720px;
+  margin: 0 auto;
+  font-style: italic;
+}
+.hero-divider {
+  width: 90px; height: 2px; margin: 34px auto 0;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+.section { margin-bottom: 70px; }
+.section-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--accent-cyan);
+  opacity: 0.6;
+}
+.section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  background: linear-gradient(100deg, #ffffff 0%, #c9b6ff 60%, #9d6bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.section h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--accent-gold);
+  margin: 30px 0 14px;
+}
+.section p {
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  margin-bottom: 14px;
+}
+.section p strong { color: var(--accent-gold); font-weight: 600; }
+.section ul { list-style: none; margin: 14px 0 20px; padding-left: 0; }
+.section ul li {
+  color: var(--text-muted);
+  font-size: 1rem;
+  padding: 6px 0 6px 26px;
+  position: relative;
+}
+.section ul li::before {
+  content: '◆';
+  position: absolute;
+  left: 0; top: 6px;
+  font-size: 0.6rem;
+  color: var(--accent-violet);
+}
+.callout {
+  margin: 24px 0;
+  padding: 22px 26px;
+  background: linear-gradient(135deg, rgba(157, 107, 255, 0.12), rgba(56, 224, 208, 0.06));
+  border-left: 3px solid var(--accent-gold);
+  border-radius: 0 14px 14px 0;
+  color: var(--text-muted);
+  font-size: 0.98rem;
+}
+.callout strong { color: var(--accent-gold); }
+.power-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 24px 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(157, 107, 255, 0.2);
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+}
+.power-table th {
+  background: rgba(157, 107, 255, 0.18);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  text-align: left;
+  font-weight: 600;
+}
+.power-table td {
+  padding: 14px 18px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  border-top: 1px solid rgba(157, 107, 255, 0.12);
+  vertical-align: top;
+}
+.power-table td:first-child { font-weight: 600; }
+.power-strong { color: var(--accent-green) !important; }
+.power-weak { color: var(--accent-red) !important; }
+.power-mid { color: var(--accent-cyan) !important; }
+.signs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-top: 26px;
+}
+.sign-card {
+  position: relative;
+  padding: 24px 22px;
+  background: var(--bg-card);
+  border: 1px solid rgba(157, 107, 255, 0.18);
+  border-radius: var(--radius);
+  backdrop-filter: blur(14px);
+  transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
+}
+.sign-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(224, 182, 74, 0.5);
+  box-shadow: var(--shadow-glow), 0 20px 40px rgba(0,0,0,0.35);
+}
+.sign-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  color: #fff;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sign-card h4 .num {
+  font-size: 0.72rem;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: rgba(224, 182, 74, 0.15);
+  border: 1px solid rgba(224, 182, 74, 0.3);
+  color: var(--accent-gold);
+}
+.sign-block { margin-bottom: 12px; font-size: 0.92rem; line-height: 1.65; }
+.sign-block .label {
+  display: inline-block;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 5px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.label-plus { background: rgba(74, 222, 128, 0.12); color: var(--accent-green); border: 1px solid rgba(74, 222, 128, 0.3); }
+.label-minus { background: rgba(248, 113, 113, 0.12); color: var(--accent-red); border: 1px solid rgba(248, 113, 113, 0.3); }
+.label-rec { background: rgba(224, 182, 74, 0.12); color: var(--accent-gold); border: 1px solid rgba(224, 182, 74, 0.3); }
+.sign-block p { margin: 0; color: var(--text-muted); }
+.summary-box {
+  margin-top: 34px;
+  padding: 26px 28px;
+  background: linear-gradient(160deg, rgba(157, 107, 255, 0.15), rgba(11, 7, 22, 0.9));
+  border: 1px solid rgba(224, 182, 74, 0.25);
+  border-radius: 20px;
+}
+.summary-box h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--accent-gold);
+  margin-bottom: 12px;
+}
+.summary-box p { margin-bottom: 10px; }
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+.lesson-nav a {
+  flex: 1;
+  min-width: 200px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid rgba(157, 107, 255, 0.2);
+  border-radius: 14px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: all 0.35s ease;
+  text-align: center;
+}
+.lesson-nav a:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow);
+}
+.lesson-nav a span {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 4px;
+}
+footer {
+  text-align: center;
+  padding: 40px 0 20px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  border-top: 1px solid rgba(157, 107, 255, 0.12);
+  margin-top: 60px;
+  letter-spacing: 0.05em;
+}
+footer span { color: var(--accent-gold); }
+@media (max-width: 768px) {
+  .wrapper { padding: 0 18px 60px; }
+  .hero { padding: 60px 0 40px; }
+  .section { margin-bottom: 50px; }
+  .sign-card { padding: 20px 18px; }
+  .power-table th, .power-table td { padding: 10px 12px; font-size: 0.85rem; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.8rem; }
+  .signs-grid { grid-template-columns: 1fr; }
+  .power-table { font-size: 0.82rem; }
+  .power-table th, .power-table td { padding: 8px 10px; }
+  .lesson-nav { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header class="hero">
+    <div class="hero-badge">Урок 4 · Женская планета</div>
+    <h1>Луна</h1>
+    <p class="hero-sub">Чувственность, интуиция, забота. Твой внутренний дом и умение чувствовать.</p>
+    <div class="hero-divider"></div>
+  </header>
+
+  <section class="section">
+    <div class="section-label">Основной текст</div>
+    <h2>Что такое Луна в гороскопе</h2>
+
+    <p>Луна — первая женская планета. И самая близкая к человеку. Если Солнце — это то, каким тебя видят другие, то Луна — это то, каким ты бываешь наедине с собой.</p>
+
+    <p>Луна отвечает за три вещи: <strong>чувственность, интуицию и заботу</strong>.</p>
+
+    <p><strong>Чувственность</strong> — это твоя способность чувствовать. Не думать, не анализировать, а именно чувствовать. Радость, грусть, нежность, тревогу, покой. Чем живее твоя Луна, тем богаче твой внутренний мир.</p>
+
+    <p><strong>Интуиция</strong> — это твоё внутреннее знание без слов. Когда ты «просто чувствуешь», что что-то не так. Когда знаешь ответ, но не можешь объяснить почему. Луна — это твой внутренний радар.</p>
+
+    <p><strong>Забота</strong> — это твоя способность принимать, согревать, поддерживать. Не только других, но и себя. Умение создать себе безопасное место, где можно выдохнуть.</p>
+
+    <h3>Когда Луна сильная</h3>
+    <ul>
+      <li>Хорошо понимает свои чувства.</li>
+      <li>Доверяет интуиции.</li>
+      <li>Умеет заботиться и принимать заботу.</li>
+      <li>Создаёт вокруг себя тепло и уют.</li>
+      <li>Восстанавливается в тишине и покое.</li>
+    </ul>
+
+    <h3>Когда Луна слабая или поражена</h3>
+    <ul>
+      <li>Не понимает, что чувствует.</li>
+      <li>Подавляет эмоции или их избегает.</li>
+      <li>Не доверяет себе.</li>
+      <li>Не умеет принимать заботу.</li>
+      <li>Чувствует внутреннюю пустоту и тревогу.</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Важно:</strong> Луна — это не слабость. Это глубина. Человек с сильной Луной не «слишком чувствительный» — он живой. Он умеет чувствовать то, что другие не замечают.
+    </div>
+
+    <p>Третий вопрос: <strong>как у тебя с чувствами?</strong> Понимаешь ли ты, что чувствуешь? Доверяешь ли своей интуиции? Умеешь ли заботиться о себе и принимать заботу от других?</p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Сила планеты</div>
+    <h2>Сила и слабость Луны по знакам</h2>
+
+    <p>Прежде чем читать разбор, посмотри, в каком знаке стоит твоя Луна. От этого зависит, насколько сильно звучит твоя чувствительность, интуиция и способность заботиться.</p>
+
+    <table class="power-table">
+      <tr><th>Положение</th><th>Знаки</th><th>Что это значит</th></tr>
+      <tr><td class="power-strong">Сильная</td><td>Телец, Рыбы, Весы, Рак</td><td>Луна звучит глубоко. Чувственность, интуиция и забота проявлены от природы.</td></tr>
+      <tr><td class="power-weak">Слабая</td><td>Козерог, Скорпион, Близнецы</td><td>Луна звучит тише. Контакт с чувствами и умение принимать заботу требуют осознанной работы.</td></tr>
+      <tr><td class="power-mid">Средняя</td><td>Остальные знаки</td><td>Луна работает в среднем режиме. Всё зависит от других планет и от самого человека.</td></tr>
+    </table>
+
+    <p>Если твоя Луна в сильном знаке — ты хорошо чувствуешь себя и других, умеешь заботиться и принимать заботу. Если в слабом — ты можешь подавлять эмоции, не понимать свои чувства или бояться близости. Это не холодность, это защита. Чувствительность возвращается через безопасность и внимание к себе. Среднее положение — это баланс: чувства есть, но их нужно слышать.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Разбор по знакам</div>
+    <h2>Луна в знаках</h2>
+
+    <div class="signs-grid">
+
+      <div class="sign-card">
+        <h4>Луна в Овне <span class="num">1</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Живые, быстрые эмоции. Чувствует ярко и сразу. Внутренняя смелость, прямота в чувствах. Быстро восстанавливается.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Вспыльчивость, нетерпимость, эмоциональная импульсивность. Чувства вспыхивают и гаснут. Не умеет ждать и терпеть.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Учись паузе. Дай себе время почувствовать, прежде чем реагировать.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Луна в Тельце <span class="num">2</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Глубокая, устойчивая чувствительность. Чувствует медленно, но надолго. Внутренний покой, умение создавать уют.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Инертность, упрямство в чувствах, страх перемен. Держится за старое. Копит обиды и не отпускает.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Позволяй чувствам двигаться. Отпускай то, что отжило.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Луна в Близнецах <span class="num">3</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Лёгкость, любознательность, живой внутренний мир. Чувствует через слова и общение. Гибкость и открытость.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Поверхностность, непостоянство, эмоциональная разбросанность. Чувства быстро меняются. Много говорит о чувствах, но не проживает их.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Учись останавливаться. Иногда просто помолчи и почувствуй.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Луна в Раке <span class="num">4</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Глубокая, тёплая чувствительность. Чувствует тонко и заботится искренне. Внутренний дом, куда хочется вернуться.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Обидчивость, замкнутость, зависимость от настроения. Прячется в панцирь. Живёт прошлым. Манипулирует через чувство вины.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Не прячься. Учись говорить о чувствах прямо. Ты имеешь право на заботу.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Луна во Льве <span class="num">5</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Яркая, щедрая чувствительность. Чувствует красиво и открыто. Умеет радоваться и делиться теплом.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Тщеславие, драма, потребность в восхищении. Чувства превращаются в спектакль. Требует внимания.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Чувствуй ради себя, а не ради аплодисментов. Замечай других.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Луна в Деве <span class="num">6</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Точная, ясная чувствительность. Чувствует через детали и заботу. Умеет поддержать делом.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Критичность, тревожность, вечное недовольство. Чувства подавляются анализом. Забота превращается в контроль.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Разреши себе чувствовать, а не анализировать. Иногда просто побудь с чувством.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Луна в Весах <span class="num">7</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Мягкая, гармоничная чувствительность. Чувствует через отношения и красоту. Умеет создавать баланс.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Зависимость от чужого мнения, страх конфликта, потеря себя. Чувства подстраиваются под других.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Учись выбирать себя. Скажи «я чувствую» — и не извиняйся.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Луна в Скорпионе <span class="num">8</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Глубокая, страстная чувствительность. Чувствует на всю глубину. Умеет проходить через кризисы.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Подозрительность, мстительность, желание контролировать. Боится быть преданным и разрушает первым.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Доверяй. Позволь себе быть уязвимым. Настоящая сила не боится открыться.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Луна в Стрельце <span class="num">9</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Широкая, оптимистичная чувствительность. Чувствует через веру и смысл. Умеет вдохновлять.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Бегство от чувств, обесценивание, поверхностность. Прячется от боли в путешествиях и идеях.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Заземляйся. Позволь себе чувствовать то, что есть.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Луна в Козероге <span class="num">10</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Глубокая, сдержанная чувствительность. Чувствует сильно, но не показывает. Умеет быть опорой.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Холодность, закрытость, подавление чувств. Считает чувства слабостью. Остаётся один со своей болью.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Позволь себе чувствовать. Иногда просто скажи, что тебе тяжело. Это не слабость.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Луна в Водолее <span class="num">11</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Свободная, дружелюбная чувствительность. Чувствует через идеи и связи. Умеет быть рядом, не привязываясь.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Отстранённость, эмоциональная закрытость, страх близости. Чувства прячутся за логикой. Остаётся один в толпе.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Не бойся быть близким. Позволь людям подойти ближе.</p></div>
+      </div>
+
+      <div class="sign-card">
+        <h4>Луна в Рыбах <span class="num">12</span></h4>
+        <div class="sign-block"><span class="label label-plus">Плюс</span><p>Мягкая, глубокая, всепроникающая чувствительность. Чувствует других как себя. Умеет сострадать и прощать.</p></div>
+        <div class="sign-block"><span class="label label-minus">Минус</span><p>Растворение в других, роль жертвы, уход от реальности. Не умеет сказать «нет». Тонет в чужих чувствах.</p></div>
+        <div class="sign-block"><span class="label label-rec">Совет</span><p>Учись границам. Скажи «нет» — и сохранишь себя для тех, кому нужен.</p></div>
+      </div>
+
+    </div>
+
+    <div class="summary-box">
+      <h3>Главный вывод урока</h3>
+      <p>Луна — это чувственность, интуиция и забота. Она показывает, насколько человек живёт в контакте со своими чувствами и умеет создавать себе внутренний дом.</p>
+      <p><strong>Практика:</strong> закрой глаза на минуту и спроси себя: «Что я сейчас чувствую?» Не думай, не ищи правильный ответ. Просто почувствуй. То, что придёт — и есть твоя Луна в действии.</p>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="mars.html"><span>Назад</span>← Урок 3. Марс</a>
+      <a href="venus.html"><span>Дальше</span>Урок 5 — Венера →</a>
+    </nav>
+  </section>
+
+  <footer>
+    Курс «Познай себя» · <span>Урок 4</span> из 5
+  </footer>
+
+</div>
+</body>
+</html>
